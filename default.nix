@@ -15,8 +15,9 @@ let
   # for now this is a convenience implementation
   # WARNING: this is also added in all-carg-packages.nix in the nix-crates-index
   rustcNightly = newpkgs.rustcNightlyBin.rustc;
-  newpkgs = import (fetchgit {
-     url = https://github.com/NixOS/nixpkgs;
+  newpkgs = import (fetchFromGitHub {
+     owner = "NixOS";
+     repo = "nixpkgs";
      rev = "1f811a67274e340d9e13987801fe726308e748ab";
      sha256 = "0dhmh0fcjki8qnvy1fyw4jhi0m3kvabj9nfcd2nc4dcl2ljc84mg";
    }) {};
@@ -52,7 +53,7 @@ rec {
     buildPhase = ''
       ${rustcNightly}/bin/rustc $src/main.rs ${depsString}
       ./main
-      
+
     '';
     installPhase=''
       mkdir $out
