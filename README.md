@@ -1,58 +1,50 @@
 # nixcrates
-A drop-in replacement for `cargo` which yet uses crates.io index.
+An early stage drop-in replacement for `cargo` which uses crates.io index.
 
-**Warning**: crates.io-index uses 'semantic versioning' (see http://semver.org/) and we don't support this here. 'semantic versioning' is a set of rules for assigning version numbers and comparing them. Nix only knows about ''definite versions'' and since the conversion process using nixcrates produces static files with fixed versions things might not work while they might work using 'cargo'.
-Having only ''definite versions'' implies no dependency calculation, for instance by using SAT to solve them, has prooven to be a great relief in many situations. However, it would require a **cargo2nix** tool to have that.
-
-**Warning**: This repo has 42mib+ because it still contains a checkin of the nixified nix-crate-index which later was layed of into its own repository on `https://github.com/nixcloud/nix-crates-index.git`. Someone has to do a 'git rebase' and remove it...
+The very awesome guys over at https://nixcloud.io implemented this for fractalide. Please do consider contracting them for your hardcore nix related jobs!
 
 # Usage
 
-We describe an initial procedure to keep old revisions around.
+## Iterative updates (you'll mostly need this)
 
-## Iterative update
+1. initial setup of environment, thereafter not needed:
 
-If you are using our index from `https://github.com/nixcloud/nix-crates-index.git` then you need to do this:
+```
+        $ cd $dev # your development directory
+        $ mkdir nixcrates && cd nixcrates
+        $ git clone https://github.com/rust-lang/crates.io-index
+        $ git clone https://github.com/fractalide/nix-crates-index.git
+        $ fork https://github.com/fractalide/nixcrates.git
+        $ git clone https://github.com/your_account/nixcrates.git
+        $ cd nixcrates
+        $ nix-env -f default.nix -iA nixcrates
+```
 
-1. update the crates.io-index repository:
+2. update the crates.io-index repository:
 
-        cd crates.io-index
-        git pull
-        git rev-parse master
-        fc336466a7ede6f14ce427deb5a64c5d02d14be0
+```
+        $ cd crates.io-index
+        $ git pull
+        $ git rev-parse master
+        $ fc336466a7ede6f14ce427deb5a64c5d02d14be0
+```
 
+3. use `nixcrates` to update it
 
-2. use `nixcrates` to update it
-
-        cd nix-crates-index/
-        # remove all files (nixcrates would not do that for us!)
-        rm -Rf *
-        nixcrates ../crates.io-index/ ./
-        git add *
-
+```
+        $ cd nix-crates-index/
+        $ rm -r */
+        $ nixcrates ../crates.io-index/ ./
+        $ git add *
         # just use the rev from the crates.io-index below        
-        git commit -m 'fc3364: new revision added'
+        $ git commit -m 'crate.io rev @ fc3364, <explain what feature you want or why you're bumping it>'
+```
 
-3. afterwards try to build your packages and eventually update `nix-crates-index/all-carg-packages.nix` to reflect dependency changes
+4. send a pull request!
+
+5. for added security add your crates to the `allTargets` attribute `nixcrates/default.nix` to check that they built properly
 
         nix-build -A allTargets
-
-## Initialization
-
-Creating a initial crates.io-index conversion:
-
-    nix-shell -p cargoc crates
-    git clone https://github.com/rust-lang/crates.io-index
-    git clone https://github.com/nixcloud/nixcrates.git
-    cd nixcrates
-    git clone https://github.com/nixcloud/nix-crates-index.git
-    cargo run ../crates.io-index/ ./nix-crates-index/
-
-This will then create a 1:1 directory structure and nixify all crates.io JSON files.
-
-**Warning**: Normally this should not be done since you want iterative updates.
-
-**Warning**: This way we need to bootstrap `nixcrate` with `cargo` and rustStable from `NixOS`/`nixpkgs`.
 
 # Build examples
 
@@ -60,19 +52,20 @@ Currently we use `rustc nightly` from most recent `nipxkgs master`!
 
 Example targets:
 
-    git clone https://github.com/nixcloud/nixcrates.git
+    git clone https://github.com/fractalide/nixcrates.git
     cd nixcrates
     nix-build default.nix -A nixcrates
     nix-build default.nix -A allTargets
     nix-build default.nix -A allCrates.rustache
+    nix-build default.nix -A allCrates.serde
 
 **Warning**: there are horrible hack in this project just to make this minimal set of packages work. we were under a lot of time-pressure and low in funding. on judgement day, hopefully god didn't see it!
 
 # How it works
-We are parsing the json files of the crates.io repository and translating them into nix files. Considering dependencies we are currently only supporting versioning via `~` and `^` as well as single versions. If anything else is used we are switching to the newest version. In case of `^` and `~` we are using the highest allowed version.
+Parse the JSON files of `github.com/rust-lang/crates.io-index` repository and translating them into nix files. Considering dependencies we are currently only supporting versioning via `~` and `^` as well as single versions. If anything else is used we switch to the newest version. In case of `^` and `~` we are using the highest allowed version.
 
-## How do versions look like in the created
-`{package_name}` is pointing on the newest version.
+## What do versions look like when created?
+`{package_name}` points on the newest version.
 `all__{package_name}` contains a set of all versions.
 
 There are also several shortcuts to address the newest subversion. For every missing semver version number simply the newest is used.
@@ -82,10 +75,10 @@ For example `all__{package_name}.{package_name}_0_1` points the the version of `
 
 ### Missing dependencies
 For some reason sometimes the crates.io json file is not listing all the dependencies. If this occurs the missing dependency has to be added by hand. However editing an autogenerated file is a pain.
-Therefore this can be done in the `all_carg-packages.nix` file. At the bottom of the file you can append additional dependencie. For this see the `rusqlite` crate example where we added `pkg-config`.
+Therefore this can be done in the `nix-crates-index/default.nix` file. At the bottom of the file you can append additional dependencies. For this see the `rusqlite` crate example where `pkg-config` was added.
 
 ### Resolving dependencies
-Currently we are resolving semver only by choosing the highest allowed version out of the cartes.io repository. This works for our targets called `allTargets`.
+Currently semver is resolved by choosing the highest allowed version from `rust-lang/cartes.io-index` repository. This works for targets called `allTargets`.
 However here is a constructed case that would fail:
 
 For example your project has 2 dependencies `{dep_a}` and `{dep_b}`.
@@ -96,13 +89,17 @@ Lets assume:
 
 Now our repo would compile `dep_a` with `dep_c_0_2_0` and `dep_b` with `dep_c_0_1_2`. This is a problem as soon as `{dep_a}` as well as `{dep_b}` are exposing types from `{dep_c}` in their interfaces.
 
-### Not supported stuff
+### Not supported stuff... yet please do help out with this
 
 #### Bundled C-code
 
 The `flate2-example` uses `miniz-sys` which uses `bundled c code` that is something we don't support yet. To see the error:
 
-    nix-build -I nixpkgs=/home/joachim/Desktop/projects/nixos/nixpkgs -A allCrates.miniz-sys
+    nix-build -A allCrates.miniz-sys
+
+#### Override x_crate with a local x_crate, this helps develop locally
+#### Xml-rs != xml, crate name and extern names don't match, a mapping file needs to be passed in.
+#### What about build.rs files?
 
 #### Tests
 
@@ -110,10 +107,4 @@ Crates come with `tests` but we didn't have time to implement even though we wou
 
 ### Dependencies
 
-Say a crate you want does not build since a dependency is not set correctly, then you can use `lib.recursiveUpdate` in `nix-crates-index/all-carg-packages.nix` to change/extend them. This holds also true for `pkgs` from nixpkgs!
-
-### Stuff needed
-* override rustfbp with a local rustfbp, this helps develop locally
-* support crates with C dependencies
-* xml-rs != xml, crate name and extern names don't match, a mapping file needs to be passed in.
-* what about build.rs files?
+Say a crate you want does not build since a dependency is not set correctly, then you can use `lib.recursiveUpdate` in `nix-crates-index/default.nix` to change/extend them. This holds also true for `pkgs` from nixpkgs!
