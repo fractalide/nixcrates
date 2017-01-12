@@ -8,7 +8,7 @@ let
   cratesDeps = pkgs.lib.fold ( recursiveDeps : newCratesDeps: newCratesDeps ++ recursiveDeps.cratesDeps  );
   # symlinkCalc creates a mylibs folder and symlinks all the buildInputs's libraries from there for rustc to link them into the final binary
   symlinkCalc = pkgs.lib.fold ( dep: str: "${str} ln -fs ${dep}/lib${normalizeName dep.name}.rlib mylibs/ \n") "mkdir mylibs\n ";
-  rustcNightly = rustcNightlyBin.rustc;
+  rustNightly = rustNightlyBin.rustc;
 in
 
 rec {
@@ -23,7 +23,7 @@ rec {
     buildPhase = ''
       ${symlinkCalc buildInputs}
 #       du -a
-      ${rustcNightly}/bin/rustc $src/main.rs --crate-type "bin" --emit=dep-info,link --crate-name nixcrates -L dependency=mylibs ${depsStringCalc deps}
+      ${rustNightly}/bin/rustc $src/main.rs --crate-type "bin" --emit=dep-info,link --crate-name nixcrates -L dependency=mylibs ${depsStringCalc deps}
     '';
     installPhase = ''
       mkdir -p $out/bin
@@ -39,7 +39,7 @@ rec {
     buildInputs = with allCrates; [ getopts ];
 
     buildPhase = ''
-      ${rustcNightly}/bin/rustc $src/main.rs ${depsString}
+      ${rustNightly}/bin/rustc $src/main.rs ${depsString}
       ./main
 
     '';
@@ -63,7 +63,7 @@ rec {
 #       echo ${depsString}
 # [pid 14162] execve("/nix/store/fff3jbf9vbqhmf6qjrmzhliq516x7yrf-rustc-1.11.0/bin/rustc", ["rustc", "src/main.rs", "--crate-name", "hello_flate2", "--crate-type", "bin", "-g", "--out-dir", "/home/joachim/Desktop/projects/fractalide/fetchUrl/hello_flate2/target/debug", "--emit=dep-info,link", "-L", "dependency=/home/joachim/Desktop/projects/fractalide/fetchUrl/hello_flate2/target/debug", "-L", "dependency=/home/joachim/Desktop/projects/fractalide/fetchUrl/hello_flate2/target/debug/deps", "--extern", "flate2=/home/joachim/Desktop/projects/fractalide/fetchUrl/hello_flate2/target/debug/deps/libflate2-d719035eaa7c6a88.rlib", "-L", "native=/home/joachim/Desktop/projects/fractalide/fetchUrl/hello_flate2/target/debug/build/miniz-sys-60c8d67696f63a43/out"], [/* 105 vars */]) = 0
 
-      ${rustcNightly}/bin/rustc $src/main.rs --crate-type "bin" --emit=dep-info,link --crate-name main -L dependency=mylibs ${depsString} -L native= #flate2=${allCrates.flate2_0_2_14}/libflate2.rlib
+      ${rustNightly}/bin/rustc $src/main.rs --crate-type "bin" --emit=dep-info,link --crate-name main -L dependency=mylibs ${depsString} -L native= #flate2=${allCrates.flate2_0_2_14}/libflate2.rlib
       ./main
       exit 1
     '';
@@ -80,7 +80,7 @@ rec {
       echo "bar" > file2.txt
       echo "batz" > file3.txt
 
-      ${rustcNightly}/bin/rustc $src/main.rs --crate-type "bin" --emit=dep-info,link --crate-name main -L dependency=mylibs --extern tar=${allCrates.tar}/libtar.rlib
+      ${rustNightly}/bin/rustc $src/main.rs --crate-type "bin" --emit=dep-info,link --crate-name main -L dependency=mylibs --extern tar=${allCrates.tar}/libtar.rlib
 #       du -a
 #       /run/current-system/sw/bin/ldd ./main
       ./main
