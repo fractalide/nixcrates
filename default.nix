@@ -112,7 +112,7 @@ rec {
   E0432 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0432
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ tokio-core pnacl-build-helper ];
+    buildInputs = with allCrates; [ tokio-core pnacl-build-helper heapsize_plugin serde_yaml ];
     src = ./.;
     buildPhase=''
     '';
@@ -123,7 +123,8 @@ rec {
   E0463 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0463
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ kernel32-sys user32-sys ws2_32-sys gl_generator wayland-scanner dbghelp-sys];
+    buildInputs = with allCrates; [ kernel32-sys user32-sys ws2_32-sys gl_generator wayland-scanner
+    dbghelp-sys dwmapi-sys xmltree tendril piston-viewport vecmath rpassword jsonrpc-core ];
     src = ./.;
     buildPhase=''
     '';
@@ -134,7 +135,7 @@ rec {
   E0460 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0460
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ regex iron ];
+    buildInputs = with allCrates; [ regex iron gfx_core nickel ];
     src = ./.;
     buildPhase=''
     '';
@@ -145,7 +146,7 @@ rec {
   cant_find_build = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ openssl-sys advapi32-sys gdi32-sys miniz-sys libz-sys rust-crypto  backtrace-sys];
+    buildInputs = with allCrates; [  advapi32-sys gdi32-sys miniz-sys libz-sys rust-crypto backtrace-sys ole32-sys ];
     src = ./.;
     buildPhase=''
     '';
@@ -156,7 +157,18 @@ rec {
   E0425 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0425
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ env_logger serde_codegen_internals ];
+    buildInputs = with allCrates; [ env_logger serde_codegen_internals log4rs post-expansion fern ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0259 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0259
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ quickersort ];
     src = ./.;
     buildPhase=''
     '';
@@ -178,7 +190,7 @@ rec {
   E0455 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0455
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ core-graphics ];
+    buildInputs = with allCrates; [ core-graphics objc-foundation fsevent-sys ];
     src = ./.;
     buildPhase=''
     '';
@@ -189,7 +201,7 @@ rec {
   issue27783 = stdenv.mkDerivation rec { # https://github.com/rust-lang/rust/issues/27783
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ term_size gl_common ];
+    buildInputs = with allCrates; [ term_size gl_common clock_ticks ];
     src = ./.;
     buildPhase=''
     '';
@@ -197,10 +209,88 @@ rec {
       mkdir $out
     '';
   };
-  no_such_file = stdenv.mkDerivation rec { # https://github.com/rust-lang/rust/issues/27783
+  no_such_file = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ term_size gl_common ];
+    buildInputs = with allCrates; [ mime_guess ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  not_found_librs = stdenv.mkDerivation rec { # note must build first time (run nix-collect-garbage to replicate error)
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ sdl2 c_vec protobuf compiletest_rs xdg untrusted ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  NotPresent = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ openssl-sys html5ever-atoms harfbuzz-sys ring # (ring depends on "untrusted" that seems to be why it fails)
+    ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  PkgConfig = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ libsodium-sys glib-sys dbus cairo-sys-rs ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  EnvVarNotSet = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ x11 bzip2-sys expat-sys servo-freetype-sys4 ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  UnstableLibraryFeature = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ mmap ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  MismatchSHA256 = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ multipart ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  Retired = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ tenatious ];
     src = ./.;
     buildPhase=''
     '';
