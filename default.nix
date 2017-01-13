@@ -109,4 +109,103 @@ rec {
       mkdir $out
     '';
   };
+  E0432 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0432
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ tokio-core pnacl-build-helper ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0463 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0463
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ kernel32-sys user32-sys ws2_32-sys gl_generator wayland-scanner dbghelp-sys];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0460 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0460
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ regex iron ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  cant_find_build = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ openssl-sys advapi32-sys gdi32-sys miniz-sys libz-sys rust-crypto  backtrace-sys];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0425 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0425
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ env_logger serde_codegen_internals ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0412 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0412
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ aster quasi clippy_lints];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0455 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0455
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ core-graphics ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  issue27783 = stdenv.mkDerivation rec { # https://github.com/rust-lang/rust/issues/27783
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ term_size gl_common ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  no_such_file = stdenv.mkDerivation rec { # https://github.com/rust-lang/rust/issues/27783
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ term_size gl_common ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
 }
