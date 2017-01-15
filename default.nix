@@ -159,6 +159,7 @@ rec {
     comctl32-sys dxgi-sys oleaut32-sys comdlg32-sys json_io rusoto_codegen simple_gaussian aligned_alloc
     netapi32-sys serde-hjson named_pipe hid-sys rustlex_codegen gtk-rs-lgpl-docs d3d12-sys
     all__rusqlite.rusqlite_0_6_0 # dependency of ostn02_phf
+    runtimeobject-sys
 
     ];
     src = ./.;
@@ -176,6 +177,7 @@ rec {
     iron # important to fix
     gfx_core nickel slog-term lalrpop-snap hyper_serde
     postgres_array capnp-rpc rs-es ignore rustful inth-oauth2 elastic_hyper
+    rocket
     ];
     src = ./.;
     buildPhase=''
@@ -234,6 +236,7 @@ rec {
     all__image.image_0_6_1 #dependency of glyph_packer
     external_mixin_umbrella connected_socket beanstalkd error_def
     all__qcollect-traits.qcollect-traits_0_4_1 #dependency of qindex_multi
+    phloem mudpie uil_shared yaml 
     ];
     src = ./.;
     buildPhase=''
@@ -317,7 +320,7 @@ rec {
   E0277 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0277
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ seax_svm temperature  ];
+    buildInputs = with allCrates; [ seax_svm temperature mm_image fiz-math ];
     src = ./.;
     buildPhase=''
     '';
@@ -386,7 +389,7 @@ rec {
     buildInputs = with allCrates; [ mime_guess llvm-sys ffmpeg-sys hotspot rl-sys
     all__typenum.typenum_1_2_0 # dependency of static-buffer
     all__typenum.typenum_1_1_0 # dependency of dimensioned
-    libtar-sys tar-sys mcpat-sys
+    libtar-sys tar-sys mcpat-sys repl
     ];
     src = ./.;
     buildPhase=''
@@ -408,7 +411,8 @@ rec {
     all__sdl2.sdl2_0_25_0 # dependency of sdl2_ttf sdl2_mixer
     all__sdl2.sdl2_0_15_0 # dependency of sdl2_image
     rustsym gtypes rust-libcore xsv cargo-check pretty gtypes xargo base32 rusty-tags
-    sysinfo maxminddb cargo-outdated jit_macros bencode partial
+    sysinfo maxminddb cargo-outdated jit_macros bencode partial bloomfilter gcollections
+    cereal_macros cargo-graph nickel_macros
     ];
     src = ./.;
     buildPhase=''
@@ -428,7 +432,7 @@ rec {
     libgpg-error-sys netlib-provider assert_cli
     libsystemd-sys systemd # also in EnvNotSet due to error message
     liquid debugtrace libgpg-error-sys tcod-sys carboxyl tcod snappy-sys xcb chomp rust-htslib
-    hdf5-sys i2cdev cld2-sys
+    hdf5-sys i2cdev cld2-sys cld2 cronparse
     ];
     src = ./.;
     buildPhase=''
@@ -445,6 +449,8 @@ rec {
       zmq-sys # also in EnvVarNotSet due to error message
       libudev-sys pico-sys wren-sys notify-rust c-ares-sys rust-lzma ruby-sys
       netlib-src neon-sys gexiv2-sys ruster_unsafe python3-sys python27-sys
+      mcpat-sys
+
       ];
     src = ./.;
     buildPhase=''
@@ -461,7 +467,8 @@ rec {
       libsystemd-sys systemd # also in NotPresent due to error message
       zmq-sys # also in OSDepNotFoundConfig due to error message
       rocksdb assimp-sys secp256k1 onig_sys hdrhistogram stemmer sys-info lzma-sys sass-sys
-      http-muncher imgui-sys pdcurses-sys decimal 
+      http-muncher imgui-sys pdcurses-sys decimal file-lock afl-plugin objc_exception magic
+      td_clua
        ];
     src = ./.;
     buildPhase=''
@@ -485,7 +492,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ multipart pbr lz4 uchardet-sys slog-serde
-    uchardet
+    uchardet google-gmail1 water
     ];
     src = ./.;
     buildPhase=''
@@ -494,11 +501,11 @@ rec {
       mkdir $out
     '';
   };
-  crate-name_not_eq_crate_name = stdenv.mkDerivation rec {
+  not_eq = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ RustyXML glutin_core_foundation glutin_cocoa rustc-test glutin_core_graphics
-    rust-gmp gstreamer ];
+    rust-gmp gstreamer rust-sqlite ];
     src = ./.;
     buildPhase=''
     '';
@@ -506,11 +513,12 @@ rec {
       mkdir $out
     '';
   };
-  RetiredAndOldNotUpdatedORExperimentalCrates = stdenv.mkDerivation rec {
+  retired_experimental_deprecated = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ tenatious scm utils dsound-sys usp10-sys vssapi-sys winspool-sys winhttp-sys
-      httpapi-sys bcrypt-sys d2d1-sys credui-sys setupapi-sys winscard-sys wevtapi-sys
+      httpapi-sys bcrypt-sys d2d1-sys credui-sys setupapi-sys winscard-sys wevtapi-sys odbc32-sys shlwapi-sys
+      posix-ipc
     ];
     src = ./.;
     buildPhase=''
@@ -535,7 +543,7 @@ rec {
       mkdir $out
     '';
   };
-  needsPatchShebangs = stdenv.mkDerivation rec {
+  shebangs = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ stb_image superlu-sys rocksdb-sys freetype
@@ -574,7 +582,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ xxhash free_macros phantom epsilonz_algebra metafactory
-      grabbag_macros interval monad_macros
+      grabbag_macros interval monad_macros expression
     ];
     src = ./.;
     buildPhase=''
