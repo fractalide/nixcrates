@@ -178,6 +178,8 @@ rec {
     gfx_core nickel slog-term lalrpop-snap hyper_serde
     postgres_array capnp-rpc rs-es ignore rustful inth-oauth2 elastic_hyper
     rocket
+    all__regex_dfa.regex_dfa_0_4_0 # dependency of cfg-regex
+    vulkano
     ];
     src = ./.;
     buildPhase=''
@@ -189,7 +191,7 @@ rec {
   E0457 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0457
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ easy-plugin-plugins
+    buildInputs = with allCrates; [ easy-plugin-plugins oil_shared
 
     ];
     src = ./.;
@@ -236,7 +238,7 @@ rec {
     all__image.image_0_6_1 #dependency of glyph_packer
     external_mixin_umbrella connected_socket beanstalkd error_def
     all__qcollect-traits.qcollect-traits_0_4_1 #dependency of qindex_multi
-    phloem mudpie uil_shared yaml 
+    phloem mudpie uil_shared yaml gc_plugin rosalind 
     ];
     src = ./.;
     buildPhase=''
@@ -253,7 +255,8 @@ rec {
       serde_codegen_internals log4rs post-expansion fern syslog
       nat_traversal #affected by not_found_librs experiment with disabling 'exit 1' in nix-crates-index/default.nix ln 116
       simple_logger security-framework json_macros rand_macros nanomsg libsodium-sys
-      spaceapi libmultilog rustspec_assertions libimagstore stderrlog
+      spaceapi libmultilog rustspec_assertions libimagstore stderrlog libimagstore kernlog
+
     ];
     src = ./.;
     buildPhase=''
@@ -282,6 +285,17 @@ rec {
     '';
     installPhase=''
       mkdir $out
+    '';
+  };
+  E0308 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0308
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ eventfd   ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+    mkdir $out
     '';
   };
   E0271 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0271
@@ -412,7 +426,7 @@ rec {
     all__sdl2.sdl2_0_15_0 # dependency of sdl2_image
     rustsym gtypes rust-libcore xsv cargo-check pretty gtypes xargo base32 rusty-tags
     sysinfo maxminddb cargo-outdated jit_macros bencode partial bloomfilter gcollections
-    cereal_macros cargo-graph nickel_macros
+    cereal_macros cargo-graph nickel_macros c_str
     ];
     src = ./.;
     buildPhase=''
@@ -432,7 +446,7 @@ rec {
     libgpg-error-sys netlib-provider assert_cli
     libsystemd-sys systemd # also in EnvNotSet due to error message
     liquid debugtrace libgpg-error-sys tcod-sys carboxyl tcod snappy-sys xcb chomp rust-htslib
-    hdf5-sys i2cdev cld2-sys cld2 cronparse
+    hdf5-sys i2cdev cld2-sys cld2 cronparse gmp-sys
     ];
     src = ./.;
     buildPhase=''
@@ -449,7 +463,7 @@ rec {
       zmq-sys # also in EnvVarNotSet due to error message
       libudev-sys pico-sys wren-sys notify-rust c-ares-sys rust-lzma ruby-sys
       netlib-src neon-sys gexiv2-sys ruster_unsafe python3-sys python27-sys
-      mcpat-sys
+      mcpat-sys erlang_nif-sys
 
       ];
     src = ./.;
@@ -468,7 +482,7 @@ rec {
       zmq-sys # also in OSDepNotFoundConfig due to error message
       rocksdb assimp-sys secp256k1 onig_sys hdrhistogram stemmer sys-info lzma-sys sass-sys
       http-muncher imgui-sys pdcurses-sys decimal file-lock afl-plugin objc_exception magic
-      td_clua
+      td_clua chipmunk-sys
        ];
     src = ./.;
     buildPhase=''
@@ -492,7 +506,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ multipart pbr lz4 uchardet-sys slog-serde
-    uchardet google-gmail1 water
+    uchardet google-gmail1 water lcov-parser google-groupsmigration1
     ];
     src = ./.;
     buildPhase=''
@@ -582,7 +596,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ xxhash free_macros phantom epsilonz_algebra metafactory
-      grabbag_macros interval monad_macros expression
+      grabbag_macros interval monad_macros expression event simple-signal
     ];
     src = ./.;
     buildPhase=''
