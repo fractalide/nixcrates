@@ -109,11 +109,37 @@ rec {
       mkdir $out
     '';
   };
+  E0519 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0519
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [
+    juju
+    ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+    mkdir $out
+    '';
+  };
+  E0518 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0518
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [
+    unicode_names
+    ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+    mkdir $out
+    '';
+  };
   E0512 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0512
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [
-      all__crossbeam.crossbeam_0_1_6 # depends on simple_parallel
+      all__crossbeam.crossbeam_0_1_6 # dependency of simple_parallel
     ];
     src = ./.;
     buildPhase=''
@@ -126,12 +152,14 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ kernel32-sys gdi32-sys advapi32-sys user32-sys
-    ws2_32-sys # very important lib
-    gl_generator wayland-scanner
+    ws2_32-sys gl_generator wayland-scanner  # very important libs
     dbghelp-sys dwmapi-sys xmltree tendril piston-viewport vecmath rpassword jsonrpc-core ethabi ktmw32-sys
     crypt32-sys psapi-sys secur32-sys native-tls ole32-sys flate2 rust_sodium-sys userenv-sys d3d11-sys winmm-sys
     geojson app_dirs dwrite-sys d3dcompiler-sys uuid-sys xinput-sys mpr-sys r2d2_sqlite plist ssdp alpm
-    comctl32-sys dxgi-sys 
+    comctl32-sys dxgi-sys oleaut32-sys comdlg32-sys json_io rusoto_codegen simple_gaussian aligned_alloc
+    netapi32-sys serde-hjson named_pipe hid-sys rustlex_codegen gtk-rs-lgpl-docs d3d12-sys
+    all__rusqlite.rusqlite_0_6_0 # dependency of ostn02_phf
+
     ];
     src = ./.;
     buildPhase=''
@@ -147,7 +175,7 @@ rec {
     regex # important to fix
     iron # important to fix
     gfx_core nickel slog-term lalrpop-snap hyper_serde
-    postgres_array capnp-rpc rs-es ignore rustful
+    postgres_array capnp-rpc rs-es ignore rustful inth-oauth2 elastic_hyper
     ];
     src = ./.;
     buildPhase=''
@@ -156,10 +184,12 @@ rec {
     mkdir $out
     '';
   };
-  E0259 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0259
+  E0457 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0457
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ quickersort ];
+    buildInputs = with allCrates; [ easy-plugin-plugins
+
+    ];
     src = ./.;
     buildPhase=''
     '';
@@ -170,7 +200,9 @@ rec {
   E0455 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0455
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ core-graphics objc-foundation fsevent-sys coreaudio-sys ];
+    buildInputs = with allCrates; [ core-graphics objc-foundation fsevent-sys coreaudio-sys
+
+    ];
     src = ./.;
     buildPhase=''
     '';
@@ -183,6 +215,7 @@ rec {
     version="1";
     buildInputs = with allCrates; [ html5ever_macros
     all__syntex_syntax.syntex_syntax_0_24_0 # dependency of rusty-cheddar
+    collenchyma-blas
 
     ];
     src = ./.;
@@ -197,6 +230,10 @@ rec {
     version="1";
     buildInputs = with allCrates; [ tokio-core pnacl-build-helper heapsize_plugin serde_yaml ipc-channel string_cache_plugin
     all__quasi.quasi_0_11_0 futures-cpupool serde_item rust-base58 rblas mod_path bio phf_mac simplelog rustfft
+    fractal-dto shoggoth_macros
+    all__image.image_0_6_1 #dependency of glyph_packer
+    external_mixin_umbrella connected_socket beanstalkd error_def
+    all__qcollect-traits.qcollect-traits_0_4_1 #dependency of qindex_multi
     ];
     src = ./.;
     buildPhase=''
@@ -212,7 +249,8 @@ rec {
       env_logger # critical library
       serde_codegen_internals log4rs post-expansion fern syslog
       nat_traversal #affected by not_found_librs experiment with disabling 'exit 1' in nix-crates-index/default.nix ln 116
-      simple_logger security-framework json_macros rand_macros nanomsg
+      simple_logger security-framework json_macros rand_macros nanomsg libsodium-sys
+      spaceapi libmultilog rustspec_assertions libimagstore stderrlog
     ];
     src = ./.;
     buildPhase=''
@@ -232,6 +270,39 @@ rec {
       mkdir $out
     '';
   };
+  E0405 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0405
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ quack  ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0271 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0271
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ qcollect-traits  ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+    mkdir $out
+    '';
+  };
+  E0259 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0259
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ quickersort ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+    mkdir $out
+    '';
+  };
   E0244 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0244
     name="allTargets";
     version="1";
@@ -243,10 +314,54 @@ rec {
       mkdir $out
     '';
   };
+  E0277 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0277
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ seax_svm temperature  ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0112 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0112
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ ioc  ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0107 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0107
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ syntaxext_lint   ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
   E0050 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0244
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ ncollide_geometry];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  E0046 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0246
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ extprim ];
     src = ./.;
     buildPhase=''
     '';
@@ -268,7 +383,11 @@ rec {
   no_such_file_or_path = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ mime_guess llvm-sys ffmpeg-sys hotspot rl-sys  ];
+    buildInputs = with allCrates; [ mime_guess llvm-sys ffmpeg-sys hotspot rl-sys
+    all__typenum.typenum_1_2_0 # dependency of static-buffer
+    all__typenum.typenum_1_1_0 # dependency of dimensioned
+    libtar-sys tar-sys mcpat-sys
+    ];
     src = ./.;
     buildPhase=''
     '';
@@ -288,7 +407,8 @@ rec {
     all__sdl2.sdl2_0_27_3 # dependency of sdl2 orbclient
     all__sdl2.sdl2_0_25_0 # dependency of sdl2_ttf sdl2_mixer
     all__sdl2.sdl2_0_15_0 # dependency of sdl2_image
-    rustsym gtypes rust-libcore xsv cargo-check pretty gtypes xargo base32
+    rustsym gtypes rust-libcore xsv cargo-check pretty gtypes xargo base32 rusty-tags
+    sysinfo maxminddb cargo-outdated jit_macros bencode partial
     ];
     src = ./.;
     buildPhase=''
@@ -304,10 +424,11 @@ rec {
     libz-sys # critical library
     harfbuzz-sys ring # (ring depends on "untrusted" that seems to be why it fails)
     termbox-sys openblas-provider openblas-src1 rustbox vorbis-encoder expectest rust-crypto backtrace-sys
-    all__lmdb-sys.lmdb-sys_0_2_1 lmdb-sys # dependency of lmdb-rs
+    all__lmdb-sys.lmdb-sys_0_2_1 lmdb-sys # dependency of lmdb
     libgpg-error-sys netlib-provider assert_cli
     libsystemd-sys systemd # also in EnvNotSet due to error message
-    liquid debugtrace libgpg-error-sys tcod-sys carboxyl tcod snappy-sys
+    liquid debugtrace libgpg-error-sys tcod-sys carboxyl tcod snappy-sys xcb chomp rust-htslib
+    hdf5-sys i2cdev cld2-sys
     ];
     src = ./.;
     buildPhase=''
@@ -319,10 +440,11 @@ rec {
   OSDepNotFoundConfig = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ libsodium-sys glib-sys dbus cairo-sys-rs clang-sys  portaudio
+    buildInputs = with allCrates; [ glib-sys dbus cairo-sys-rs clang-sys  portaudio
       alsa-sys fuse libusb-sys libarchive3-sys
       zmq-sys # also in EnvVarNotSet due to error message
-      libusb
+      libudev-sys pico-sys wren-sys notify-rust c-ares-sys rust-lzma ruby-sys
+      netlib-src neon-sys gexiv2-sys ruster_unsafe python3-sys python27-sys
       ];
     src = ./.;
     buildPhase=''
@@ -338,7 +460,8 @@ rec {
       heartbeats-simple-sys ncurses hoedown liblmdb-sys lua52-sys brotli-sys linenoise-rust brotli2 hlua
       libsystemd-sys systemd # also in NotPresent due to error message
       zmq-sys # also in OSDepNotFoundConfig due to error message
-      rocksdb assimp-sys secp256k1 onig_sys hdrhistogram
+      rocksdb assimp-sys secp256k1 onig_sys hdrhistogram stemmer sys-info lzma-sys sass-sys
+      http-muncher imgui-sys pdcurses-sys decimal 
        ];
     src = ./.;
     buildPhase=''
@@ -361,7 +484,9 @@ rec {
   MismatchSHA256 = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ multipart pbr lz4 ];
+    buildInputs = with allCrates; [ multipart pbr lz4 uchardet-sys slog-serde
+    uchardet
+    ];
     src = ./.;
     buildPhase=''
     '';
@@ -373,7 +498,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ RustyXML glutin_core_foundation glutin_cocoa rustc-test glutin_core_graphics
-    rust-gmp  ];
+    rust-gmp gstreamer ];
     src = ./.;
     buildPhase=''
     '';
@@ -385,7 +510,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ tenatious scm utils dsound-sys usp10-sys vssapi-sys winspool-sys winhttp-sys
-      httpapi-sys bcrypt-sys
+      httpapi-sys bcrypt-sys d2d1-sys credui-sys setupapi-sys winscard-sys wevtapi-sys
     ];
     src = ./.;
     buildPhase=''
@@ -400,7 +525,7 @@ rec {
     buildInputs = with allCrates; [ valico # rustless uses it
     ncollide_geometry diesel_codegen
     all__url.url_0_5_10 #dependency of jsonrpc-http-server
-    buildable
+    buildable doapi ramp
 
     ];
     src = ./.;
@@ -414,7 +539,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ stb_image superlu-sys rocksdb-sys freetype
-      superlu threed-ice-sys
+      superlu threed-ice-sys postgres_macros sel4-sys
     ];
     src = ./.;
     buildPhase=''
@@ -426,7 +551,7 @@ rec {
   panicOnNoneOption = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ sodium-sys  ];
+    buildInputs = with allCrates; [ sodium-sys barnacl_sys  ];
     src = ./.;
     buildPhase=''
     '';
@@ -448,7 +573,31 @@ rec {
   syntaxError = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ xxhash free_macros phantom  ];
+    buildInputs = with allCrates; [ xxhash free_macros phantom epsilonz_algebra metafactory
+      grabbag_macros interval monad_macros
+    ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  shouldBeRunWithCargo = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ libjit-sys  ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  missingNixDep = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ slog-json   ];
     src = ./.;
     buildPhase=''
     '';
