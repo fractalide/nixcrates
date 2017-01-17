@@ -192,7 +192,7 @@ rec {
     postgres_array capnp-rpc rs-es ignore rustful inth-oauth2 elastic_hyper
     rocket
     all__regex_dfa.regex_dfa_0_4_0 # dependency of cfg-regex
-    vulkano ease theban_db_server
+    vulkano ease theban_db_server phant
     ];
     src = ./.;
     buildPhase=''
@@ -232,7 +232,7 @@ rec {
     version="1";
     buildInputs = with allCrates; [ html5ever_macros
     all__syntex_syntax.syntex_syntax_0_24_0 # dependency of rusty-cheddar
-    collenchyma-blas ion intrusive-containers
+    collenchyma-blas ion intrusive-containers intovec
 
     ];
     src = ./.;
@@ -258,6 +258,7 @@ rec {
     all__image.image_0_6_1 #dependency of jamkit
     lazy resources_package
     all__fern.fern_0_1_12 #dependency of fern_macros
+    maybe_utf8 power-assert dsl_macros
 
 
     ];
@@ -292,6 +293,7 @@ rec {
     version="1";
     buildInputs = with allCrates; [ aster quasi clippy_lints easy-plugin-parsers svd
       all__blas.blas_0_9_1 #dependency for numeric
+      cursive
      ];
     src = ./.;
     buildPhase=''
@@ -369,7 +371,9 @@ rec {
   E0277 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0277
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ seax_svm temperature mm_image fiz-math ];
+    buildInputs = with allCrates; [ seax_svm temperature mm_image fiz-math
+      mm_video
+    ];
     src = ./.;
     buildPhase=''
     '';
@@ -443,13 +447,14 @@ rec {
       mkdir $out
     '';
   };
-  no_such_file_or_path = stdenv.mkDerivation rec {
+  no_such_file_or_directory = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ mime_guess llvm-sys ffmpeg-sys hotspot rl-sys
     all__typenum.typenum_1_2_0 # dependency of static-buffer
     all__typenum.typenum_1_1_0 # dependency of dimensioned
     libtar-sys tar-sys mcpat-sys repl cargo-clippy crc24
+    pdf
     ];
     src = ./.;
     buildPhase=''
@@ -475,7 +480,7 @@ rec {
     cereal_macros cargo-graph nickel_macros c_str anybar_rs cargo-count scgi reminisce
     cargo-local-pkgs cow
     all__cargo-multi.cargo-multi_0_5_0 # dependency of cargo-multi
-    cargo-do hyperloglog 
+    cargo-do hyperloglog
     ];
     src = ./.;
     buildPhase=''
@@ -496,7 +501,7 @@ rec {
     libsystemd-sys systemd # also in EnvNotSet due to error message
     liquid debugtrace tcod-sys carboxyl tcod snappy-sys xcb chomp rust-htslib
     hdf5-sys i2cdev cld2-sys cld2 cronparse gmp-sys zlib-src-sys nix-test freeimage-sys neovim-rs parsell
-    parasail-sys
+    parasail-sys arrayfire
     ];
     src = ./.;
     buildPhase=''
@@ -516,7 +521,7 @@ rec {
       mcpat-sys erlang_nif-sys dns-sd
       all__bindgen.bindgen_0_16_0 # dependency of bindgen_plugin
       fontconfig-sys gexiv2-sys rustler opusfile-sys
-      libfa-sys
+      libfa-sys gphoto2-sys
 
       ];
     src = ./.;
@@ -535,7 +540,7 @@ rec {
       rocksdb assimp-sys secp256k1 onig_sys hdrhistogram stemmer sys-info lzma-sys sass-sys
       http-muncher imgui-sys pdcurses-sys decimal file-lock afl-plugin objc_exception magic
       td_clua chipmunk-sys mrusty objc_test_utils nanovg afl-sys blip_buf-sys chip8_vm
-      td_clua libudt4-sys chemfiles-sys chamkho unqlite-sys
+      td_clua libudt4-sys chemfiles-sys chamkho unqlite-sys tweetnacl-sys
        ];
     src = ./.;
     buildPhase=''
@@ -573,7 +578,7 @@ rec {
     google-reseller1_sandbox google-blogger3 google-fusiontables2 google-plus1 google-civicinfo2
     google-oauth2_v2 google-doubleclickbidmanager1 google-gan1_beta1 google-pubsub1_beta2 google-freebase1
     google-cloudlatencytest2 google-compute1 google-discovery1 google-datastore1_beta2 google-dns1
-    google-dfareporting2d1
+    google-dfareporting2d1 google-logging1_beta3
     ];
     src = ./.;
     buildPhase=''
@@ -667,7 +672,7 @@ rec {
       grabbag_macros interval monad_macros expression event simple-signal crc32 tojson_macros
       gluster fftw3-sys
       all__rustc-serialize.rustc-serialize_0_2_15 # dependency of cson
-      i3 mdbm-sys kissfft
+      i3 mdbm-sys kissfft hexfloat
     ];
     src = ./.;
     buildPhase=''
@@ -680,6 +685,17 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ libjit-sys  ];
+    src = ./.;
+    buildPhase=''
+    '';
+    installPhase=''
+      mkdir $out
+    '';
+  };
+  unknownCompilerVersion = stdenv.mkDerivation rec {
+    name="allTargets";
+    version="1";
+    buildInputs = with allCrates; [ core_collections ];
     src = ./.;
     buildPhase=''
     '';
