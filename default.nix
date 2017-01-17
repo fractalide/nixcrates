@@ -172,7 +172,7 @@ rec {
     comctl32-sys dxgi-sys oleaut32-sys comdlg32-sys json_io rusoto_codegen simple_gaussian aligned_alloc
     netapi32-sys serde-hjson named_pipe hid-sys rustlex_codegen gtk-rs-lgpl-docs d3d12-sys
     all__rusqlite.rusqlite_0_6_0 # dependency of ostn02_phf lonlat_bng
-    runtimeobject-sys rquery native-tls probor
+    runtimeobject-sys rquery native-tls probor os_pipe piston-texture codespawn
 
     ];
     src = ./.;
@@ -192,7 +192,7 @@ rec {
     postgres_array capnp-rpc rs-es ignore rustful inth-oauth2 elastic_hyper
     rocket
     all__regex_dfa.regex_dfa_0_4_0 # dependency of cfg-regex
-    vulkano ease theban_db_server phant
+    vulkano ease theban_db_server phant linea
     ];
     src = ./.;
     buildPhase=''
@@ -204,7 +204,7 @@ rec {
   E0457 = stdenv.mkDerivation rec { # https://doc.rust-lang.org/error-index.html#E0457
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ easy-plugin-plugins oil_shared
+    buildInputs = with allCrates; [ easy-plugin-plugins oil_shared worldgen
 
     ];
     src = ./.;
@@ -232,7 +232,7 @@ rec {
     version="1";
     buildInputs = with allCrates; [ html5ever_macros
     all__syntex_syntax.syntex_syntax_0_24_0 # dependency of rusty-cheddar
-    collenchyma-blas ion intrusive-containers intovec
+    collenchyma-blas ion intrusive-containers intovec trie
 
     ];
     src = ./.;
@@ -279,6 +279,7 @@ rec {
       simple_logger security-framework json_macros rand_macros nanomsg libsodium-sys
       spaceapi libmultilog rustspec_assertions libimagstore stderrlog libimagstore kernlog
       postgres-derive-codegen ocl-core studio_logger mowl geoip diesel_codegen_syntex
+      confsolve
 
     ];
     src = ./.;
@@ -293,7 +294,7 @@ rec {
     version="1";
     buildInputs = with allCrates; [ aster quasi clippy_lints easy-plugin-parsers svd
       all__blas.blas_0_9_1 #dependency for numeric
-      cursive
+      cursive ber
      ];
     src = ./.;
     buildPhase=''
@@ -372,7 +373,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ seax_svm temperature mm_image fiz-math
-      mm_video
+      mm_video acacia
     ];
     src = ./.;
     buildPhase=''
@@ -453,7 +454,7 @@ rec {
     buildInputs = with allCrates; [ mime_guess llvm-sys ffmpeg-sys hotspot rl-sys
     all__typenum.typenum_1_2_0 # dependency of static-buffer
     all__typenum.typenum_1_1_0 # dependency of dimensioned
-    libtar-sys tar-sys mcpat-sys repl cargo-clippy crc24
+    libtar-sys tar-sys mcpat-sys repl cargo-clippy crc24 octavo-digest
     pdf
     ];
     src = ./.;
@@ -501,7 +502,7 @@ rec {
     libsystemd-sys systemd # also in EnvNotSet due to error message
     liquid debugtrace tcod-sys carboxyl tcod snappy-sys xcb chomp rust-htslib
     hdf5-sys i2cdev cld2-sys cld2 cronparse gmp-sys zlib-src-sys nix-test freeimage-sys neovim-rs parsell
-    parasail-sys arrayfire
+    parasail-sys arrayfire po netlib-blas-provider hdf5-sys
     ];
     src = ./.;
     buildPhase=''
@@ -521,7 +522,8 @@ rec {
       mcpat-sys erlang_nif-sys dns-sd
       all__bindgen.bindgen_0_16_0 # dependency of bindgen_plugin
       fontconfig-sys gexiv2-sys rustler opusfile-sys
-      libfa-sys gphoto2-sys
+      libfa-sys gphoto2-sys libraw-sys silverknife-fontconfig-sys pocketsphinx-sys
+      opencv
 
       ];
     src = ./.;
@@ -540,7 +542,8 @@ rec {
       rocksdb assimp-sys secp256k1 onig_sys hdrhistogram stemmer sys-info lzma-sys sass-sys
       http-muncher imgui-sys pdcurses-sys decimal file-lock afl-plugin objc_exception magic
       td_clua chipmunk-sys mrusty objc_test_utils nanovg afl-sys blip_buf-sys chip8_vm
-      td_clua libudt4-sys chemfiles-sys chamkho unqlite-sys tweetnacl-sys
+      td_clua libudt4-sys chemfiles-sys chamkho unqlite-sys tweetnacl-sys xxhash-sys
+      libxm
        ];
     src = ./.;
     buildPhase=''
@@ -579,6 +582,7 @@ rec {
     google-oauth2_v2 google-doubleclickbidmanager1 google-gan1_beta1 google-pubsub1_beta2 google-freebase1
     google-cloudlatencytest2 google-compute1 google-discovery1 google-datastore1_beta2 google-dns1
     google-dfareporting2d1 google-logging1_beta3
+    dns
     ];
     src = ./.;
     buildPhase=''
@@ -604,7 +608,7 @@ rec {
     version="1";
     buildInputs = with allCrates; [ tenatious scm utils dsound-sys usp10-sys vssapi-sys winspool-sys winhttp-sys
       httpapi-sys bcrypt-sys d2d1-sys credui-sys setupapi-sys winscard-sys wevtapi-sys odbc32-sys shlwapi-sys
-      posix-ipc fromxml utmp pdh-sys xdg-rs
+      posix-ipc fromxml utmp pdh-sys xdg-rs winusb-sys
     ];
     src = ./.;
     buildPhase=''
@@ -657,7 +661,10 @@ rec {
   noMethodNamed = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ heapsize_derive synstructure conduit-cookie sha1-hasher discotech_zookeeper ];
+    buildInputs = with allCrates; [ heapsize_derive synstructure conduit-cookie
+    sha1-hasher discotech_zookeeper netopt
+
+     ];
     src = ./.;
     buildPhase=''
     '';
@@ -672,7 +679,7 @@ rec {
       grabbag_macros interval monad_macros expression event simple-signal crc32 tojson_macros
       gluster fftw3-sys
       all__rustc-serialize.rustc-serialize_0_2_15 # dependency of cson
-      i3 mdbm-sys kissfft hexfloat
+      i3 mdbm-sys kissfft hexfloat core-nightly
     ];
     src = ./.;
     buildPhase=''
