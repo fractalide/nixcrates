@@ -96,7 +96,7 @@ rec {
     '';
   };
   # with this you can do: nix-build -A allCrates.getopts to compile single dependencies
-  #inherit allCrates;
+  inherit allCrates;
 
   allTargets = stdenv.mkDerivation rec {
     name="allTargets";
@@ -174,7 +174,7 @@ rec {
     all__rusqlite.rusqlite_0_6_0 # dependency of ostn02_phf lonlat_bng
     all__rusqlite.rusqlite_0_7_3 # dependency of nickel_sqlite
     runtimeobject-sys rquery native-tls probor os_pipe piston-texture codespawn millefeuille
-    serde_codegen xmlJSON
+    serde_codegen xmlJSON clippy
     ];
     src = ./.;
     buildPhase=''
@@ -263,9 +263,9 @@ rec {
     maybe_utf8 power-assert dsl_macros compile_msg nock currency trace uil_parsers screenshot
     soundchange bytekey forkjoin kwarg_macros brainfuck_macros raw webplatform_concat_bytes
     plugger-macros algs4 rust-netmap sdr draw_state fractran_macros crdt cli storage leveldb-sys
-    static_assert parse-generics-poc sfunc serial-win export_cstr membuf
-
-
+    static_assert parse-generics-poc sfunc serial-win export_cstr membuf sha cef-sys hyperdex
+    unify fourcc
+    all__image.image_0_7_2 # dependency of cuticula
 
     ];
     src = ./.;
@@ -300,7 +300,7 @@ rec {
     version="1";
     buildInputs = with allCrates; [ aster quasi clippy_lints easy-plugin-parsers svd
       all__blas.blas_0_9_1 #dependency for numeric
-      cursive ber bitfield bson-rs netio hyphenation_commons
+      cursive ber bitfield bson-rs netio hyphenation_commons redis
      ];
     src = ./.;
     buildPhase=''
@@ -390,7 +390,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ seax_svm temperature mm_image fiz-math
-      mm_video acacia cortex
+      mm_video acacia cortex pool
     ];
     src = ./.;
     buildPhase=''
@@ -499,7 +499,7 @@ rec {
     cargo-local-pkgs cow
     all__cargo-multi.cargo-multi_0_5_0 # dependency of cargo-multi
     cargo-do hyperloglog ncurses vobject sufdb dining_philosophers cargo-apk
-    wheel_timer coinaddress rustbook
+    wheel_timer coinaddress rustbook cargo-expand pwrs
     ];
     src = ./.;
     buildPhase=''
@@ -543,7 +543,8 @@ rec {
       all__bindgen.bindgen_0_16_0 # dependency of bindgen_plugin
       fontconfig-sys gexiv2-sys rustler opusfile-sys
       libfa-sys gphoto2-sys libraw-sys silverknife-fontconfig-sys pocketsphinx-sys
-      opencv wiringpi libudt4-sys blip_buf-sys qmlrs ejdb-sys gnutls-sys
+      opencv wiringpi libudt4-sys blip_buf-sys qmlrs ejdb-sys gnutls-sys tinysnark
+      va_list-test
 
       ];
     src = ./.;
@@ -563,7 +564,7 @@ rec {
       http-muncher imgui-sys pdcurses-sys decimal file-lock afl-plugin objc_exception magic
       td_clua chipmunk-sys mrusty objc_test_utils nanovg afl-sys blip_buf-sys chip8_vm
       td_clua libudt4-sys chemfiles-sys chamkho unqlite-sys tweetnacl-sys xxhash-sys
-      libxm oxipng ntrumls
+      libxm oxipng ntrumls va_list-helper
        ];
     src = ./.;
     buildPhase=''
@@ -602,7 +603,7 @@ rec {
     google-oauth2_v2 google-doubleclickbidmanager1 google-gan1_beta1 google-pubsub1_beta2 google-freebase1
     google-cloudlatencytest2 google-compute1 google-discovery1 google-datastore1_beta2 google-dns1
     google-dfareporting2d1 google-logging1_beta3 dns google-genomics1 google-cloudresourcemanager1_beta1
-    google-deploymentmanager2_beta2 http ql2
+    google-deploymentmanager2_beta2 http ql2 fastcgi
     ];
     src = ./.;
     buildPhase=''
@@ -682,7 +683,7 @@ rec {
     name="allTargets";
     version="1";
     buildInputs = with allCrates; [ heapsize_derive synstructure conduit-cookie
-    sha1-hasher discotech_zookeeper netopt changecase asexp
+    sha1-hasher discotech_zookeeper netopt changecase asexp cowrc rctree
 
      ];
     src = ./.;
@@ -700,7 +701,7 @@ rec {
       gluster fftw3-sys
       all__rustc-serialize.rustc-serialize_0_2_15 # dependency of cson
       i3 mdbm-sys kissfft hexfloat core-nightly cppStream grabbag_macros
-      incrust num link-config metafactory derive-new
+      incrust num link-config metafactory derive-new doc_file openssl2-sys
     ];
     src = ./.;
     buildPhase=''
@@ -756,7 +757,7 @@ rec {
   mustHave = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ github capnp-futures   ];
+    buildInputs = with allCrates; [ github capnp-futures bio skeletal_animation tokio-http2 tokio-graphql nanomsg  ];
     src = ./.;
     buildPhase=''
     '';
