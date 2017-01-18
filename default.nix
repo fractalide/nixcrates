@@ -284,7 +284,7 @@ rec {
       nat_traversal #caused by no lib.rs file
       simple_logger security-framework json_macros rand_macros nanomsg libsodium-sys
       spaceapi libmultilog rustspec_assertions libimagstore stderrlog libimagstore kernlog
-      postgres-derive-codegen ocl-core studio_logger mowl geoip diesel_codegen_syntex
+      postgres-derive-codegen ocl-core mowl geoip diesel_codegen_syntex
       confsolve replace-map
 
     ];
