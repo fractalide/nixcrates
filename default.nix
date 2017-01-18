@@ -514,7 +514,7 @@ rec {
     buildInputs = with allCrates; [ openssl-sys html5ever-atoms
     libz-sys # critical library
     harfbuzz-sys ring # (ring depends on "untrusted" that seems to be why it fails)
-    termbox-sys openblas-prNotPreovider openblas-src rustbox vorbis-encoder expectest rust-crypto backtrace-sys
+    termbox-sys openblas-provider openblas-src rustbox vorbis-encoder expectest rust-crypto backtrace-sys
     all__lmdb-sys.lmdb-sys_0_2_1 lmdb-sys # dependency of lmdb
     libgpg-error-sys netlib-provider assert_cli
     libsystemd-sys systemd # also in EnvNotSet due to error message
@@ -556,7 +556,7 @@ rec {
   EnvVarNotSet = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ x11 miniz-sys bzip2-sys expat-sys servo-freetype-sys4 glfw-sys hbs-builder context
+    buildInputs = with allCrates; [ x11 miniz-sys bzip2-sys expat-sys servo-freetype-sys glfw-sys hbs-builder context
       heartbeats-simple-sys hoedown liblmdb-sys lua52-sys brotli-sys linenoise-rust brotli2 hlua
       libsystemd-sys systemd # also in NotPresent due to error message
       rocksdb assimp-sys secp256k1 onig_sys hdrhistogram stemmer sys-info lzma-sys sass-sys
@@ -626,7 +626,7 @@ rec {
   retired_experimental_deprecated = stdenv.mkDerivation rec {
     name="allTargets";
     version="1";
-    buildInputs = with allCrates; [ tenatious scm utils dsound-sys usp10-sys vssapi-sys winspool-sys winhttp-sys
+    buildInputs = with allCrates; [ tenacious scm utils dsound-sys usp10-sys vssapi-sys winspool-sys winhttp-sys
       httpapi-sys bcrypt-sys d2d1-sys credui-sys setupapi-sys winscard-sys wevtapi-sys odbc32-sys shlwapi-sys
       posix-ipc fromxml utmp pdh-sys xdg-rs winusb-sys bitflags
     ];
