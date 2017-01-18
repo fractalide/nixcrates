@@ -96,7 +96,7 @@ rec {
     '';
   };
   # with this you can do: nix-build -A allCrates.getopts to compile single dependencies
-  inherit allCrates;
+  #inherit allCrates;
 
   allTargets = stdenv.mkDerivation rec {
     name="allTargets";
